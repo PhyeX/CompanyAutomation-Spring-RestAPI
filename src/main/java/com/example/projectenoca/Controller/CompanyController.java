@@ -1,6 +1,8 @@
 package com.example.projectenoca.Controller;
 
+import com.example.projectenoca.Exceptions.CompanyNotFoundException;
 import com.example.projectenoca.Model.Company;
+import com.example.projectenoca.Model.Employee;
 import com.example.projectenoca.Service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,8 +51,17 @@ public class CompanyController {
     }
 
     @DeleteMapping("/company/{id}")
-    public void delete(@PathVariable int id) {
-        companyService.deleteById(id);
+    public ResponseEntity<String> deleteCompany(@PathVariable int id) {
+        try {
+
+            Company company = companyService.findById(id);
+            String nameOfCompany = company.getName();
+            companyService.deleteById(id);
+            return new ResponseEntity<String>(nameOfCompany + " has deleted.", HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>(new CompanyNotFoundException(id).getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
 

@@ -320,27 +320,25 @@
                 var item = elements.item(i);
                 obj[item.name] = item.value;
             }
-            console.log(obj);
 
             $.ajax({
                 type: 'PUT',
                 url: 'http://localhost:8080/api/project/company/update/' + obj['id'],
                 data: JSON.stringify(obj),
+                async: false,
+                cache: false,
                 headers: {
                     "Content-Type": "application/json"
                 },
                 success: function (response) {
                     console.log(response);
-
-
+                    window.location.href = "http://localhost:8080";
                 }
             });
-
-
         }
-
+        updateCompany();
         function addCompany() {
-
+            console.log("Add company clicked");
             var elements = document.getElementById("addCompanyForm").elements;
             var obj = {};
             for (var i = 1; i < elements.length; i++) {
@@ -351,23 +349,11 @@
                 type: 'POST',
                 url: 'http://localhost:8080/api/project/company',
                 data: JSON.stringify(obj),
+                async: false,
+                cache: false,
                 headers: {
                     "Content-Type": "application/json"
                 },
-                success: function (response) {
-                    console.log(response);
-                }
-            });
-            window.location.href = "http://localhost:8080";
-
-        }
-
-        function deleteCompany(id) {
-            console.log("Delete Button Clicked");
-
-            $.ajax({
-                type: 'DELETE',
-                url: 'http://localhost:8080/api/project/company/' + id,
                 success: function () {
                     console.log("Succes");
                 },
@@ -376,16 +362,44 @@
                 },
                 complete: function () {
                     // Handle the complete event
-                    console.log("Ajax is done")
+                    console.log("Ajax is done");
+                    window.location.href = "http://localhost:8080";
+                }
+            });
+
+
+        }
+
+        function deleteCompany(id) {
+            console.log("Delete Button Clicked");
+
+            $.ajax({
+                type: 'DELETE',
+                async: false,
+                cache: false,
+                url: 'http://localhost:8080/api/project/company/' + id,
+                success: function () {
+                    console.log("Succes");
+
+                },
+                error: function () {
+                    console.log("Error");
+                },
+                complete: function () {
+                    // Handle the complete event
+                    console.log("Ajax is done");
+                    window.location.href = "http://localhost:8080";
                 }
             });
 
 
 
 
+
             // similar behavior as clicking on a link
-            window.location.href = "http://localhost:8080";
+
         }
+
 
 
 
@@ -485,7 +499,7 @@
 <div id="addCompany" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="" id="addCompanyForm">
+            <form method="post" id="addCompanyForm">
                 <div class="modal-header">
                     <h4 class="modal-title">Add Book</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -284,6 +284,8 @@
         type: 'POST',
         url: 'http://localhost:8080/api/project/company/'+companyId+'/employee/save',
         data: JSON.stringify(obj),
+        async: false,
+        cache: false,
         headers: {
           "Content-Type": "application/json"
         },
@@ -304,18 +306,18 @@
 
       $.ajax({
         type: 'DELETE' ,
+        async: false,
+        cache: false,
         url:  'http://localhost:8080/api/project/employee/' + id ,
         success: function (response) {
           console.log(response);
-
-
         }
       });
 
       location.reload();
     }
 
-    function sendPut(){
+    function updateEmployee(){
 
       var elements = document.getElementById("editForm").elements;
 
@@ -329,6 +331,8 @@
       $.ajax({
         type: 'PUT' ,
         url:  'http://localhost:8080/api/project/employee/' + obj['id'] ,
+        async: false,
+        cache: false,
         data : JSON.stringify(obj) ,
         headers : {
           "Content-Type": "application/json"
@@ -464,7 +468,7 @@
         <div class="modal-footer">
           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
           <input type="hidden" id="employeeId" name="id">
-          <input type="submit" class="btn btn-info" value="Save" onclick="sendPut()">
+          <input type="submit" class="btn btn-info" value="Save" onclick="updateEmployee()">
         </div>
       </form>
     </div>
